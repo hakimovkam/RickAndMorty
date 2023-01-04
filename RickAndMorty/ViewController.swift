@@ -9,11 +9,44 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    private let data = ["1", "2", "3", "4"]
+    private let data = ["Rick Sanchez", "Morty Smith", "Summer Smith", "Beth Smith", "Jerry Smith", "Abadango Cluster Princess", "Abradolf Lincler", "Adjudicator Rick", "Agency Director", "Alan Rails", "Albert Einstein", "Alexander", "Alien Googah", "Alien Morty", "Alien Rick", "Amish Cyborg", "Annie", "Antenna Morty", "Antenna Rick", "Ants in my Eyes Johnson"]
+    
+    var characterManager = CharacterManager()
     
     let searchController = UISearchController(searchResultsController: nil)
-    let searchBar = UISearchBar()
-    let tableView = UITableView()
+    private let searchBar: UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        return searchBar
+    }()
+    private let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .white
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    private let button: UIButton = {
+        let button = UIButton()
+        
+        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        if #available(iOS 15.0, *) {
+            button.configuration = .filled()
+        } else {
+            // Fallback on earlier versions
+        }
+        if #available(iOS 15.0, *) {
+            button.configuration?.title = "Go!"
+        } else {
+            button.titleLabel?.text = "Go1"
+        }
+        if #available(iOS 15.0, *) {
+            button.configuration?.baseBackgroundColor = .systemBlue
+        } else {
+            button.backgroundColor = .systemBlue
+        }
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +60,10 @@ class ViewController: UIViewController {
 
     }
 
+    @objc func buttonPressed() {
+        characterManager.performRequest(with: characterManager.urlString)
+        
+    }
 }
 
 class TableViewCell: UITableViewCell {
@@ -34,15 +71,18 @@ class TableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.accessoryType = .none
     }
+    
+    
 }
 
-//MARK: - extension
+//MARK: - UITableViewDelegate
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
+//MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return data.count }
     
@@ -56,6 +96,7 @@ extension ViewController: UITableViewDataSource {
     
 }
 
+//MARK: - setup Views
 extension ViewController {
     
     func setupViews() {
@@ -63,23 +104,35 @@ extension ViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.searchController = searchController
         navigationItem.title = "Rick and Morty"
-
         
         view.addSubview(searchBar)
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        
         view.addSubview(tableView)
-        tableView.backgroundColor = .white
-        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
     }
     
     func setConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
             tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor)
+            tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             
+            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            button.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
+            button.heightAnchor.constraint(equalToConstant: 50),
+            button.widthAnchor.constraint(equalToConstant: 100),
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+    }
+}
+
+//MARK: - CharacterManagerDelegate
+extension ViewController: CharacterManagerDelegate {
+    func didUpdateCharacter(_ characterManager: CharacterManager, character: CharacterModel) {
+        print("updateData")
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
     }
 }
