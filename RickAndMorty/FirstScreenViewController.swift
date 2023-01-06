@@ -7,9 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FirstScreenViewController: UIViewController {
 
-    private let data = ["Rick Sanchez", "Morty Smith", "Summer Smith", "Beth Smith", "Jerry Smith", "Abadango Cluster Princess", "Abradolf Lincler", "Adjudicator Rick", "Agency Director", "Alan Rails", "Albert Einstein", "Alexander", "Alien Googah", "Alien Morty", "Alien Rick", "Amish Cyborg", "Annie", "Antenna Morty", "Antenna Rick", "Ants in my Eyes Johnson"]
+//    private let data = ["Rick Sanchez", "Morty Smith", "Summer Smith", "Beth Smith", "Jerry Smith", "Abadango Cluster Princess", "Abradolf Lincler", "Adjudicator Rick", "Agency Director", "Alan Rails", "Albert Einstein", "Alexander", "Alien Googah", "Alien Morty", "Alien Rick", "Amish Cyborg", "Annie", "Antenna Morty", "Antenna Rick", "Ants in my Eyes Johnson"]
+    
+    private var data: [CharacterModel] = []
+    
+//    private var counter = 0
     
     var characterManager = CharacterManager()
     
@@ -48,25 +52,54 @@ class ViewController: UIViewController {
         return button
     }()
     
+    //MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        setupViews()
-        setConstraints()
+        
+        characterManager.delegate = self
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableView")
 
+        buttonPressed()
+        setupViews()
+        setConstraints()
     }
 
     @objc func buttonPressed() {
-        characterManager.performRequest(with: characterManager.urlString)
-        
+//        data = []
+        DispatchQueue.main.async {
+            for counter in 0...19 {
+                self.characterManager.performRequestCharacter(with: self.characterManager.urlString, counter: counter)
+                self.tableView.reloadData()
+                
+            }
+            
+        }
+
     }
 }
 
+//MARK: - CharacterManagerDelegate
+extension FirstScreenViewController: CharacterManagerDelegate {
+    
+    func didUpdateCharacter(_ characterManager: CharacterManager, character: CharacterModel) {
+        DispatchQueue.main.async {
+            self.data.append(character)
+            self.tableView.reloadData()
+        }
+    }
+    
+    func didFailWithError(error: Error) {
+        print(error)
+    }
+}
+
+
+//MARK: - TableViewCell
 class TableViewCell: UITableViewCell {
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.accessoryType = .none
@@ -76,28 +109,26 @@ class TableViewCell: UITableViewCell {
 }
 
 //MARK: - UITableViewDelegate
-extension ViewController: UITableViewDelegate {
+extension FirstScreenViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 //MARK: - UITableViewDataSource
-extension ViewController: UITableViewDataSource {
+extension FirstScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return data.count }
-    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableView", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
+        cell.textLabel?.text = data[indexPath.row].name
         return cell
     }
-    
     
 }
 
 //MARK: - setup Views
-extension ViewController {
+extension FirstScreenViewController {
     
     func setupViews() {
         view.backgroundColor = .white
@@ -115,6 +146,7 @@ extension ViewController {
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
             tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+
             tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
@@ -126,13 +158,3 @@ extension ViewController {
     }
 }
 
-//MARK: - CharacterManagerDelegate
-extension ViewController: CharacterManagerDelegate {
-    func didUpdateCharacter(_ characterManager: CharacterManager, character: CharacterModel) {
-        print("updateData")
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error)
-    }
-}
