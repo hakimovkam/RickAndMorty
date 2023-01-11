@@ -8,12 +8,10 @@
 import UIKit
 
 class FirstScreenViewController: UIViewController {
-
-//    private let data = ["Rick Sanchez", "Morty Smith", "Summer Smith", "Beth Smith", "Jerry Smith", "Abadango Cluster Princess", "Abradolf Lincler", "Adjudicator Rick", "Agency Director", "Alan Rails", "Albert Einstein", "Alexander", "Alien Googah", "Alien Morty", "Alien Rick", "Amish Cyborg", "Annie", "Antenna Morty", "Antenna Rick", "Ants in my Eyes Johnson"]
     
     private var data: [CharacterModel] = []
     
-//    private var counter = 0
+    private var page: Int = 0
     
     var characterManager = CharacterManager()
     
@@ -25,14 +23,14 @@ class FirstScreenViewController: UIViewController {
     }()
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     private let button: UIButton = {
         let button = UIButton()
         
-        button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+        button.addTarget(self, action: #selector(loadNewCharacter), for: .touchUpInside)
         if #available(iOS 15.0, *) {
             button.configuration = .filled()
         } else {
@@ -44,9 +42,9 @@ class FirstScreenViewController: UIViewController {
             button.titleLabel?.text = "Go1"
         }
         if #available(iOS 15.0, *) {
-            button.configuration?.baseBackgroundColor = .systemBlue
+            button.configuration?.baseBackgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
         } else {
-            button.backgroundColor = .systemBlue
+            button.backgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
         }
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -62,32 +60,29 @@ class FirstScreenViewController: UIViewController {
         tableView.dataSource = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "TableView")
 
-        buttonPressed()
+        loadNewCharacter()
         setupViews()
         setConstraints()
     }
 
-    @objc func buttonPressed() {
-//        data = []
-        DispatchQueue.main.async {
-            for counter in 0...19 {
-                self.characterManager.performRequestCharacter(with: self.characterManager.urlString, counter: counter)
-                self.tableView.reloadData()
-                
-            }
-            
-        }
-
+    @objc func loadNewCharacter() {
+        self.characterManager.performRequestCharacter(with: self.characterManager.urlString)
+        page += 1
     }
 }
 
 //MARK: - CharacterManagerDelegate
 extension FirstScreenViewController: CharacterManagerDelegate {
     
-    func didUpdateCharacter(_ characterManager: CharacterManager, character: CharacterModel) {
+    func didUpdateCharacter(_ characterManager: CharacterManager, character: [CharacterModel]) {
         DispatchQueue.main.async {
-            self.data.append(character)
+            for i in 0...19 {
+                self.data.append(character[i])
+            }
             self.tableView.reloadData()
+            
+            let indexPath = IndexPath(row: self.data.count - 1, section: 0)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
         }
     }
     
@@ -122,6 +117,15 @@ extension FirstScreenViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableView", for: indexPath)
         cell.textLabel?.text = data[indexPath.row].name
+        cell.textLabel?.textColor = .white
+        
+        if (indexPath.row % 2 == 0) {
+            cell.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1)
+        } else {
+            cell.backgroundColor = #colorLiteral(red: 0.2247067988, green: 0.2396971881, blue: 0.2693860531, alpha: 1)
+        }
+        
+        cell.imageView?.image = UIImage(named: "1")
         return cell
     }
     
@@ -131,8 +135,9 @@ extension FirstScreenViewController: UITableViewDataSource {
 extension FirstScreenViewController {
     
     func setupViews() {
-        view.backgroundColor = .white
+        view.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1)
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.barStyle = .black
         navigationItem.searchController = searchController
         navigationItem.title = "Rick and Morty"
         
@@ -140,6 +145,7 @@ extension FirstScreenViewController {
         view.addSubview(tableView)
         view.addSubview(button)
     }
+    
     
     func setConstraints() {
         NSLayoutConstraint.activate([
