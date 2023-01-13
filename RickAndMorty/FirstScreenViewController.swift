@@ -27,28 +27,28 @@ class FirstScreenViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-    private let button: UIButton = {
-        let button = UIButton()
-        
-        button.addTarget(self, action: #selector(loadNewCharacter), for: .touchUpInside)
-        if #available(iOS 15.0, *) {
-            button.configuration = .filled()
-        } else {
-            // Fallback on earlier versions
-        }
-        if #available(iOS 15.0, *) {
-            button.configuration?.title = "Go!"
-        } else {
-            button.titleLabel?.text = "Go1"
-        }
-        if #available(iOS 15.0, *) {
-            button.configuration?.baseBackgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
-        } else {
-            button.backgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
-        }
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+//    private let button: UIButton = {
+//        let button = UIButton()
+//
+//        button.addTarget(self, action: #selector(loadNewCharacter), for: .touchUpInside)
+//        if #available(iOS 15.0, *) {
+//            button.configuration = .filled()
+//        } else {
+//            // Fallback on earlier versions
+//        }
+//        if #available(iOS 15.0, *) {
+//            button.configuration?.title = "Go!"
+//        } else {
+//            button.titleLabel?.text = "Go1"
+//        }
+//        if #available(iOS 15.0, *) {
+//            button.configuration?.baseBackgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
+//        } else {
+//            button.backgroundColor = #colorLiteral(red: 1, green: 0.5963680148, blue: 0, alpha: 1)
+//        }
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
     
     //MARK: - viewDidLoad
     override func viewDidLoad() {
@@ -143,22 +143,23 @@ extension FirstScreenViewController {
         
         view.addSubview(searchBar)
         view.addSubview(tableView)
-        view.addSubview(button)
+//        view.addSubview(button)
     }
     
     
     func setConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
+//            tableView.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -28),
             tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
             
-            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            button.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
-            button.heightAnchor.constraint(equalToConstant: 50),
-            button.widthAnchor.constraint(equalToConstant: 100),
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+//            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+//            button.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 20),
+//            button.heightAnchor.constraint(equalToConstant: 50),
+//            button.widthAnchor.constraint(equalToConstant: 100),
+//            button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
