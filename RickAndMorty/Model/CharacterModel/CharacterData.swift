@@ -9,26 +9,26 @@ import Foundation
 
 struct CharacterData: Codable {
     let info: Info
-    let results: [Results]
+    let results: [Character]
 }
 
-struct Results: Codable {
+struct Character: Codable {
     let name: String
     let status: String
     let species: String
     let gender: String
-    let origin: Origin
-    let location: Location
+    let origin: OriginLocation
+    let location: LastLocation
     let image: String
     let episode: [String]
 }
 
-struct Origin: Codable {
+struct OriginLocation: Codable {
     let name: String
     let url: String
 }
 
-struct Location: Codable {
+struct LastLocation: Codable {
     let name: String
     let url: String
 }
@@ -39,3 +39,4 @@ struct Info: Codable {
     let next: String?
     let prev: String?
 }
+  

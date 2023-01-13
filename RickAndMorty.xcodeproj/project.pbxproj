@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB5B7818297182DB00B5DF81 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5B7817297182DB00B5DF81 /* TabBarController.swift */; };
+		EB5B781A29718DE500B5DF81 /* SecondScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5B781929718DE500B5DF81 /* SecondScreenViewController.swift */; };
 		EB7BC2C32964AA0B00626717 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7BC2C22964AA0B00626717 /* AppDelegate.swift */; };
 		EB7BC2C52964AA0B00626717 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7BC2C42964AA0B00626717 /* SceneDelegate.swift */; };
 		EB7BC2C72964AA0B00626717 /* FirstScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB7BC2C62964AA0B00626717 /* FirstScreenViewController.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EB5B7817297182DB00B5DF81 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		EB5B781929718DE500B5DF81 /* SecondScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondScreenViewController.swift; sourceTree = "<group>"; };
 		EB7BC2BF2964AA0B00626717 /* RickAndMorty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RickAndMorty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7BC2C22964AA0B00626717 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EB7BC2C42964AA0B00626717 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -111,7 +115,9 @@
 			children = (
 				EB7BC2C22964AA0B00626717 /* AppDelegate.swift */,
 				EB7BC2C42964AA0B00626717 /* SceneDelegate.swift */,
+				EB5B7817297182DB00B5DF81 /* TabBarController.swift */,
 				EB7BC2C62964AA0B00626717 /* FirstScreenViewController.swift */,
+				EB5B781929718DE500B5DF81 /* SecondScreenViewController.swift */,
 				EB7BC2FB29658F5A00626717 /* Model */,
 				EB7BC2CE2964AA0C00626717 /* Assets.xcassets */,
 				EB7BC2D02964AA0C00626717 /* LaunchScreen.storyboard */,
@@ -304,6 +310,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB5B781A29718DE500B5DF81 /* SecondScreenViewController.swift in Sources */,
 				EB7BC2FA29658F4C00626717 /* CharacterData.swift in Sources */,
 				EB7BC2F6296582A500626717 /* CharacterManager.swift in Sources */,
 				EB7BC2CD2964AA0B00626717 /* RickAndMorty.xcdatamodeld in Sources */,
@@ -312,6 +319,7 @@
 				EB7BC2C32964AA0B00626717 /* AppDelegate.swift in Sources */,
 				EBB65DD8296618B6003CB4D4 /* OriginModel.swift in Sources */,
 				EB7BC2C52964AA0B00626717 /* SceneDelegate.swift in Sources */,
+				EB5B7818297182DB00B5DF81 /* TabBarController.swift in Sources */,
 				EB7BC2F829658A0600626717 /* CharacterModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

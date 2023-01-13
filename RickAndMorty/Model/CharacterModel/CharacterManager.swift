@@ -48,14 +48,20 @@ struct CharacterManager {
                 let status = decoderData.results[i].status
                 let species = decoderData.results[i].species
                 let gender = decoderData.results[i].gender
-                let originName = decoderData.results[i].origin.name
-                let originUrl = decoderData.results[i].origin.url
-                let locationName = decoderData.results[i].location.name
-                let locationUrl = decoderData.results[i].location.url
+                let originLocationName = decoderData.results[i].origin.name
+                let originLocationUrl = decoderData.results[i].origin.url
+                let lastLocationName = decoderData.results[i].location.name
+                let lastLocationUrl = decoderData.results[i].location.url
                 let image = decoderData.results[i].image
                 let episode = decoderData.results[i].episode
                 
-                result.append(CharacterModel(name: name, status: status, species: species, gender: gender, originName: originName, originUrl: originUrl, locationName: locationName, locationUrl: locationUrl, image: image, episode: episode))
+                result.append(CharacterModel(name: name, status: status,
+                                             species: species, gender: gender,
+                                             originLocationName: originLocationName,
+                                             originLocationUrl: originLocationUrl,
+                                             lastLocationName: lastLocationName,
+                                             lastLocationUrl: lastLocationUrl,
+                                             image: image, episode: episode))
             }
             return result
         } catch {

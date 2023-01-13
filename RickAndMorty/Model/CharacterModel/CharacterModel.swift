@@ -12,10 +12,10 @@ struct CharacterModel {
     let status: String
     let species: String
     let gender: String
-    let originName: String
-    let originUrl : String
-    let locationName: String
-    let locationUrl: String
+    let originLocationName: String
+    let originLocationUrl : String
+    let lastLocationName: String
+    let lastLocationUrl: String
     let image: String
     let episode: [String]
 }
