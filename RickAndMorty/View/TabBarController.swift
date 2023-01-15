@@ -18,10 +18,16 @@ class TabBarController: UITabBarController {
     
     private func setUpTabBar() {
         viewControllers = [
-        generateVC(viewController: UINavigationController(rootViewController: FirstScreenViewController()),
+        generateVC(viewController: UINavigationController(rootViewController: CharactersViewController()),
                    title: "Characters",
                    image: UIImage(systemName: "person")),
-        generateVC(viewController: UINavigationController(rootViewController: SecondScreenViewController()),
+        generateVC(viewController: UINavigationController(rootViewController: LocationsViewControllers()),
+                   title: "Locations",
+                   image: UIImage(systemName: "globe.asia.australia.fill")),
+        generateVC(viewController: UINavigationController(rootViewController: EpisodesViewController()),
+                   title: "Episodes",
+                   image: UIImage(systemName: "tv")),
+        generateVC(viewController: UINavigationController(rootViewController: SetingsViewController()),
                    title: "Setings",
                    image: UIImage(systemName: "gearshape.2"))
         ]
@@ -37,10 +43,10 @@ class TabBarController: UITabBarController {
     }
     
     private func setTabBarApperance() {
-        let positionOnX: CGFloat = 20
+        let positionOnX: CGFloat = 0
         let positionOnY: CGFloat = 10
-        let width = tabBar.bounds.width - positionOnX * 2
-        let height = tabBar.bounds.height + positionOnY * 2
+        let width = tabBar.bounds.width - positionOnX * 5
+        let height = tabBar.bounds.height + positionOnY * 8
         
         let rounderLayer = CAShapeLayer()
         
@@ -48,12 +54,14 @@ class TabBarController: UITabBarController {
                                                            y: tabBar.bounds.minY - positionOnY ,
                                                            width: width,
                                                            height: height),
-                                       cornerRadius: height / 3)
+                                       cornerRadius: height / 3.5)
         
         rounderLayer.path = bezierPath.cgPath
         tabBar.layer.insertSublayer(rounderLayer, at: 0)
-        tabBar.itemWidth = width / 5
+        tabBar.itemWidth = width / 6.7 // distance between tab bar items
         tabBar.itemPositioning = .centered
+        
+        
         
         rounderLayer.fillColor = UIColor.mainWhite.cgColor
         tabBar.tintColor = UIColor.tabBarItemAccent

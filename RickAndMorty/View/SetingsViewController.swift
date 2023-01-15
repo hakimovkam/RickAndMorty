@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SecondScreenViewController: UIViewController {
+final class SetingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
