@@ -1,31 +1,36 @@
 //
-//  CharacterManager.swift
+//  File.swift
 //  RickAndMorty
 //
-//  Created by Камиль Хакимов on 04.01.2023.
+//  Created by Камиль Хакимов on 15.01.2023.
 //
 
 import Foundation
 
-protocol CharacterManagerDelegate {
+protocol CharacterViewPresenterProtocol: AnyObject {
+    init(view: CharacterViewProtocol, model: CharacterModel)
+}
+
+protocol CharacterViewProtocol: AnyObject {
     func didUpdateCharacter(_ characterManager: CharacterManager, character: [CharacterModel])
     func didFailWithError(error: Error)
 }
 
-struct CharacterManager {
+
+class CharacterPresenter: CharacterViewPresenterProtocol {
+    let view: CharacterViewProtocol
+    let model: CharacterModel
+    
     let urlString : String =  "https://rickandmortyapi.com/api/character"
     var nextPagesUrlString: String?
     var previousPagesUrlString: String?
     
-    var delegate: CharacterManagerDelegate?
-    
     func performRequestCharacter(with urlString: String) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { data, response, error in
+            let task = session.dataTask(with: url) { data, _, error in
                 if error != nil {
-                    self.delegate?.didFailWithError(error: error!)
-                    return
+                    
                 }
                 if let safeData = data {
                     if let character = self.parseJSONCharacter(safeData) {
@@ -36,7 +41,6 @@ struct CharacterManager {
             task.resume()
         }
     }
-    
     
     func parseJSONCharacter(_ characterData: Data) -> [CharacterModel]? {
         let decoder = JSONDecoder()
@@ -70,5 +74,8 @@ struct CharacterManager {
         }
     }
     
+    required init(view: CharacterViewProtocol, model: CharacterModel) {
+        self.view = view
+        self.model = model
+    }
 }
-
