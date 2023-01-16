@@ -1,8 +1,8 @@
 //
-//  CharacterModule.swift
+//  Character.swift
 //  RickAndMorty
 //
-//  Created by Камиль Хакимов on 04.01.2023.
+//  Created by Камиль Хакимов on 16.01.2023.
 //
 
 import Foundation
