@@ -8,8 +8,10 @@
 import UIKit
 
 class CharacterViewController: UIViewController {
-
+    
     var presenter: CharacterViewPresenterProtocol!
+    
+    //MARK: - UI elements
     
     let tableView: UITableView = {
         let tableView = UITableView()
@@ -18,8 +20,19 @@ class CharacterViewController: UIViewController {
         return tableView
     }()
     
+    let searchController = UISearchController(searchResultsController: nil)
+        private let searchBar: UISearchBar = {
+            let searchBar = UISearchBar()
+            searchBar.translatesAutoresizingMaskIntoConstraints = false
+            return searchBar
+        }()
+    
+    //MARK: -
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1)
+        
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -67,18 +80,20 @@ extension CharacterViewController: CharacterViewProtocol {
     }
     
     func didFailWithError(error: Error) {
-        print(error)
+        print(error.localizedDescription)
     }
 }
 
 extension CharacterViewController {
     func setupViews() {
-        view.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1 )
+        view.backgroundColor = #colorLiteral(red: 0.1540856957, green: 0.1691044867, blue: 0.1987410784, alpha: 1)
         view.addSubview(tableView)
+        view.addSubview(searchBar)
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.barStyle = .black
-//        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
         navigationItem.title = "Rick and Morty"
     }
     

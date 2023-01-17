@@ -13,7 +13,7 @@ protocol CharacterViewProtocol: AnyObject {
 }
 
 protocol CharacterViewPresenterProtocol: AnyObject {
-    init(view: CharacterViewProtocol, networkService: NetworkServiceProtocol)
+    init(view: CharacterViewProtocol, networkService: NetworkServiceProtocol, router: RouterProtocol)
     func getCharacterList()
     var characters: CharacterData? { get set }
 }
@@ -21,6 +21,7 @@ protocol CharacterViewPresenterProtocol: AnyObject {
 class CharacterPresenter: CharacterViewPresenterProtocol {
     
     weak var view: CharacterViewProtocol?
+    var router: RouterProtocol?
     let networkService: NetworkServiceProtocol!
     var characters: CharacterData?
     
@@ -40,9 +41,10 @@ class CharacterPresenter: CharacterViewPresenterProtocol {
         }
     }
     
-    required init(view: CharacterViewProtocol, networkService: NetworkServiceProtocol) {
+    required init(view: CharacterViewProtocol, networkService: NetworkServiceProtocol, router: RouterProtocol) {
         self.view = view
         self.networkService = networkService
+        self.router = router
         getCharacterList()
     }
     
